@@ -1,115 +1,182 @@
-import Image from "next/image";
-import localFont from "next/font/local";
+// Create a Title component that'll render an <h1> tag with some styles
+import styled from "styled-components";
 
-const geistSans = localFont({
-    src: "./fonts/GeistVF.woff",
-    variable: "--font-geist-sans",
-    weight: "100 900",
-});
-const geistMono = localFont({
-    src: "./fonts/GeistMonoVF.woff",
-    variable: "--font-geist-mono",
-    weight: "100 900",
-});
+// Create a Wrapper component that'll render a <section> tag with some styles
+const Wrapper = styled.section`
+    box-sizing: border-box;
+    padding: 4em;
+    background-color: #fff;
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 8px;
+
+    @media (max-width: 768px) {
+        padding: 100px 0px;
+    }
+`;
+
+const Title = styled.h1`
+    font-weight: bold;
+    font-size: 1.5em;
+    text-align: center;
+    color: black;
+    margin-bottom: 1.5em;
+`;
+const Content = styled.div`
+    flex: 1;
+    padding: 0 10px;
+`;
+
+const SubTitle = styled.div`
+    font-size: 16px;
+    color: black;
+    margin-bottom: 5px;
+`;
+
+const Input = styled.input`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 4px 0px #32323229 inset;
+    text-align: center;
+    border-radius: 4px;
+    background-color: #f7f7f7;
+    padding: 10px;
+    box-sizing: border-box;
+
+    &:placeholder {
+        text-align: left;
+    }
+
+    @media (max-width: 768px) {
+        margin-bottom: 10px;
+    }
+`;
+
+const Option = styled.select`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 4px 0px #32323229 inset;
+    text-align: center;
+    border-radius: 4px;
+    background-color: #f7f7f7;
+    padding: 10px;
+    box-sizing: border-box;
+    }
+
+        @media (max-width: 768px) {
+        margin-bottom: 10px;
+    }
+`;
+
+const Contain = styled.section`
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    @media (max-width: 768px) {
+        margin-bottom: 10px;
+    }
+`;
+const Button = styled.button`
+    border: 1px solid #eaeaea;
+    border-radius: 20px;
+    padding: 4px 16px 4px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    @media (max-width: 768px) {
+        margin-top: 10px;
+    }
+`;
 
 export default function Home() {
     return (
-        <div
-            className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-        >
-            <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-                <Image
-                    className="dark:invert"
-                    src="https://nextjs.org/icons/next.svg"
-                    alt="Next.js logo"
-                    width={180}
-                    height={38}
-                    priority
-                />
-                <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-                    <li className="mb-2">
-                        Get started by editing{" "}
-                        <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-                            src/pages/index.js
-                        </code>
-                        .
-                    </li>
-                    <li>Save and see your changes instantly.</li>
-                </ol>
-
-                <div className="flex gap-4 items-center flex-col sm:flex-row">
-                    <a
-                        className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-                        href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <Image
-                            className="dark:invert"
-                            src="https://nextjs.org/icons/vercel.svg"
-                            alt="Vercel logomark"
-                            width={20}
-                            height={20}
-                        />
-                        Deploy now
-                    </a>
-                    <a
-                        className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-                        href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Read our docs
-                    </a>
-                </div>
-            </main>
-            <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-                <a
-                    className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-                    href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <Image
-                        aria-hidden
-                        src="https://nextjs.org/icons/file.svg"
-                        alt="File icon"
-                        width={16}
-                        height={16}
-                    />
-                    Learn
-                </a>
-                <a
-                    className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-                    href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <Image
-                        aria-hidden
-                        src="https://nextjs.org/icons/window.svg"
-                        alt="Window icon"
-                        width={16}
-                        height={16}
-                    />
-                    Examples
-                </a>
-                <a
-                    className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-                    href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <Image
-                        aria-hidden
-                        src="https://nextjs.org/icons/globe.svg"
-                        alt="Globe icon"
-                        width={16}
-                        height={16}
-                    />
-                    Go to nextjs.org →
-                </a>
-            </footer>
-        </div>
+        <Wrapper>
+            <Title>郵便番号検索</Title>
+            <Contain>
+                <Content>
+                    <Contain>
+                        <SubTitle>郵便番号</SubTitle>
+                        <Button>住所を取得する</Button>
+                    </Contain>
+                    <Input placeholder="000-0000"></Input>
+                </Content>
+            </Contain>
+            <Contain>
+                <Content>
+                    <SubTitle>都道府県</SubTitle>
+                    <Option placeholder="未選択">
+                        <option value="">
+                            未選択
+                        </option>
+                        <option value="北海道">北海道</option>
+                        <option value="青森県">青森県</option>
+                        <option value="岩手県">岩手県</option>
+                        <option value="宮城県">宮城県</option>
+                        <option value="秋田県">秋田県</option>
+                        <option value="山形県">山形県</option>
+                        <option value="福島県">福島県</option>
+                        <option value="茨城県">茨城県</option>
+                        <option value="栃木県">栃木県</option>
+                        <option value="群馬県">群馬県</option>
+                        <option value="埼玉県">埼玉県</option>
+                        <option value="千葉県">千葉県</option>
+                        <option value="東京都">東京都</option>
+                        <option value="神奈川県">神奈川県</option>
+                        <option value="新潟県">新潟県</option>
+                        <option value="富山県">富山県</option>
+                        <option value="石川県">石川県</option>
+                        <option value="福井県">福井県</option>
+                        <option value="山梨県">山梨県</option>
+                        <option value="長野県">長野県</option>
+                        <option value="岐阜県">岐阜県</option>
+                        <option value="静岡県">静岡県</option>
+                        <option value="愛知県">愛知県</option>
+                        <option value="三重県">三重県</option>
+                        <option value="滋賀県">滋賀県</option>
+                        <option value="京都府">京都府</option>
+                        <option value="大阪府">大阪府</option>
+                        <option value="兵庫県">兵庫県</option>
+                        <option value="奈良県">奈良県</option>
+                        <option value="和歌山県">和歌山県</option>
+                        <option value="鳥取県">鳥取県</option>
+                        <option value="島根県">島根県</option>
+                        <option value="岡山県">岡山県</option>
+                        <option value="広島県">広島県</option>
+                        <option value="山口県">山口県</option>
+                        <option value="徳島県">徳島県</option>
+                        <option value="香川県">香川県</option>
+                        <option value="愛媛県">愛媛県</option>
+                        <option value="高知県">高知県</option>
+                        <option value="福岡県">福岡県</option>
+                        <option value="佐賀県">佐賀県</option>
+                        <option value="長崎県">長崎県</option>
+                        <option value="熊本県">熊本県</option>
+                        <option value="大分県">大分県</option>
+                        <option value="宮崎県">宮崎県</option>
+                        <option value="鹿児島県">鹿児島県</option>
+                        <option value="沖縄県">沖縄県</option>
+                    </Option>
+                </Content>
+                <Content>
+                    <SubTitle>市区町村</SubTitle>
+                    <Input placeholder="世田谷区"></Input>
+                </Content>
+            </Contain>
+            <Contain>
+                <Content>
+                    <SubTitle>丁目・番地・号</SubTitle>
+                    <Input placeholder="太子堂2丁目"></Input>
+                </Content>
+                <Content>
+                    <SubTitle>建物/号室</SubTitle>
+                    <Input placeholder="アウケア202"></Input>
+                </Content>
+            </Contain>
+        </Wrapper>
     );
 }
