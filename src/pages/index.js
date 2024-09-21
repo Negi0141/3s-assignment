@@ -1,7 +1,9 @@
-// Create a Title component that'll render an <h1> tag with some styles
+// pages/index.js
 import styled from "styled-components";
+import { useState } from "react";
+import axios from "axios";
 
-// Create a Wrapper component that'll render a <section> tag with some styles
+// スタイル定義
 const Wrapper = styled.section`
     box-sizing: border-box;
     padding: 4em;
@@ -22,6 +24,7 @@ const Title = styled.h1`
     color: black;
     margin-bottom: 1.5em;
 `;
+
 const Content = styled.div`
     flex: 1;
     padding: 0 10px;
@@ -35,19 +38,12 @@ const SubTitle = styled.div`
 
 const Input = styled.input`
     width: 100%;
-    display: flex;
-    justify-content: space-between;
     margin-bottom: 20px;
     box-shadow: 0px 0px 4px 0px #32323229 inset;
-    text-align: center;
     border-radius: 4px;
     background-color: #f7f7f7;
     padding: 10px;
     box-sizing: border-box;
-
-    &:placeholder {
-        text-align: left;
-    }
 
     @media (max-width: 768px) {
         margin-bottom: 10px;
@@ -56,18 +52,14 @@ const Input = styled.input`
 
 const Option = styled.select`
     width: 100%;
-    display: flex;
-    justify-content: space-between;
     margin-bottom: 20px;
     box-shadow: 0px 0px 4px 0px #32323229 inset;
-    text-align: center;
     border-radius: 4px;
     background-color: #f7f7f7;
     padding: 10px;
     box-sizing: border-box;
-    }
 
-        @media (max-width: 768px) {
+    @media (max-width: 768px) {
         margin-bottom: 10px;
     }
 `;
@@ -81,10 +73,11 @@ const Contain = styled.section`
         margin-bottom: 10px;
     }
 `;
+
 const Button = styled.button`
     border: 1px solid #eaeaea;
     border-radius: 20px;
-    padding: 4px 16px 4px 16px;
+    padding: 4px 16px;
     cursor: pointer;
     transition: background-color 0.3s;
 
@@ -93,7 +86,41 @@ const Button = styled.button`
     }
 `;
 
+// メインコンポーネント
 export default function Home() {
+    const [zipcode, setZipcode] = useState("");
+    const [pref, setPref] = useState("");
+    const [city, setCity] = useState("");
+    const [street, setStreet] = useState("");
+    const [msg, setMsg] = useState(null); 
+
+    // 住所を取得する関数
+    const getAddress = async () => {
+        try {
+            const res = await axios.get(
+                "https://zipcloud.ibsnet.co.jp/api/search",
+                {
+                    params: { zipcode: zipcode },
+                }
+            );
+            console.log(res);
+            if (res.data.status === 200) {
+                setPref(res.data.results[0].address1);
+                setCity(res.data.results[0].address2); // 市区町村をセット
+                setStreet(res.data.results[0].address3); // 丁目・番地・号をセット
+                setMsg(null);
+            } else {
+                setPref("");
+                setCity(""); // setAddress を setCity に修正
+                setStreet(""); // setStreet を追加
+                setMsg(res.data.message); // エラーメッセージを表示
+            }
+        } catch (error) {
+            setMsg("エラーが発生しました");
+            console.error(error);
+        }
+    };
+
     return (
         <Wrapper>
             <Title>郵便番号検索</Title>
@@ -101,18 +128,25 @@ export default function Home() {
                 <Content>
                     <Contain>
                         <SubTitle>郵便番号</SubTitle>
-                        <Button>住所を取得する</Button>
+                        <Button onClick={getAddress}>住所を取得する</Button>
                     </Contain>
-                    <Input placeholder="000-0000"></Input>
+                    <Input
+                        placeholder="000-0000"
+                        value={zipcode}
+                        onChange={(e) => setZipcode(e.target.value)}
+                    />
+                    {msg ? <p>{msg}</p> : null}
                 </Content>
             </Contain>
             <Contain>
                 <Content>
                     <SubTitle>都道府県</SubTitle>
-                    <Option placeholder="未選択">
-                        <option value="">
-                            未選択
-                        </option>
+                    <Option
+                        placeholder="未選択"
+                        value={pref}
+                        onChange={(e) => setPref(e.target.value)}
+                    >
+                        <option value="">未選択</option>
                         <option value="北海道">北海道</option>
                         <option value="青森県">青森県</option>
                         <option value="岩手県">岩手県</option>
@@ -164,17 +198,25 @@ export default function Home() {
                 </Content>
                 <Content>
                     <SubTitle>市区町村</SubTitle>
-                    <Input placeholder="世田谷区"></Input>
+                    <Input
+                        placeholder="世田谷区"
+                        value={city} // 市区町村の入力値を管理
+                        onChange={(e) => setCity(e.target.value)}
+                    />
                 </Content>
             </Contain>
             <Contain>
                 <Content>
                     <SubTitle>丁目・番地・号</SubTitle>
-                    <Input placeholder="太子堂2丁目"></Input>
+                    <Input
+                        placeholder="太子堂2丁目"
+                        value={street} // 丁目・番地・号の入力値を管理
+                        onChange={(e) => setStreet(e.target.value)}
+                    />
                 </Content>
                 <Content>
                     <SubTitle>建物/号室</SubTitle>
-                    <Input placeholder="アウケア202"></Input>
+                    <Input placeholder="アウケア202" />
                 </Content>
             </Contain>
         </Wrapper>
