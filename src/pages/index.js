@@ -19,7 +19,7 @@ const Wrapper = styled.section`
 
 const Title = styled.h1`
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 32px;
     text-align: center;
     color: black;
     margin-bottom: 1.5em;
@@ -106,14 +106,14 @@ export default function Home() {
             console.log(res);
             if (res.data.status === 200) {
                 setPref(res.data.results[0].address1);
-                setCity(res.data.results[0].address2); // 市区町村をセット
-                setStreet(res.data.results[0].address3); // 丁目・番地・号をセット
+                setCity(res.data.results[0].address2); 
+                setStreet(res.data.results[0].address3); 
                 setMsg(null);
             } else {
                 setPref("");
-                setCity(""); // setAddress を setCity に修正
-                setStreet(""); // setStreet を追加
-                setMsg(res.data.message); // エラーメッセージを表示
+                setCity(""); 
+                setStreet(""); 
+                setMsg(res.data.message); 
             }
         } catch (error) {
             setMsg("エラーが発生しました");
@@ -200,7 +200,7 @@ export default function Home() {
                     <SubTitle>市区町村</SubTitle>
                     <Input
                         placeholder="世田谷区"
-                        value={city} // 市区町村の入力値を管理
+                        value={city} 
                         onChange={(e) => setCity(e.target.value)}
                     />
                 </Content>
@@ -210,12 +210,12 @@ export default function Home() {
                     <SubTitle>丁目・番地・号</SubTitle>
                     <Input
                         placeholder="太子堂2丁目"
-                        value={street} // 丁目・番地・号の入力値を管理
+                        value={street} 
                         onChange={(e) => setStreet(e.target.value)}
                     />
                 </Content>
                 <Content>
-                    <SubTitle>建物/号室</SubTitle>
+                    <SubTitle>建物名/号室</SubTitle>
                     <Input placeholder="アウケア202" />
                 </Content>
             </Contain>
